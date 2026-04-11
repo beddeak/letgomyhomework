@@ -1,27 +1,29 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/Homepage";
-import LoginPage from "./pages/Loginpage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/Signuppage";
-import PostListPage from "./pages/Postlistpage";
+import PostlistPage from "./pages/Postlistpage";
 import PostDetailPage from "./pages/Postdetailpage";
-import PostCreatePage from "./pages/Postcreatepage";
 import PostEditPage from "./pages/Posteditpage";
 import MyPostsPage from "./pages/MyPostsPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
+import ProtectRoute from "./Route/ProtectRoute";
+import Postcreatepage from "./pages/Postcreatepage";
+import AdminRoute from "./Route/AdminRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/posts" element={<PostListPage />} />
-        <Route path="/posts/:id" element={<PostDetailPage />} />
-        <Route path="/posts/create" element={<PostCreatePage />} />
-        <Route path="/posts/:id/edit" element={<PostEditPage />} />
-        <Route path="/my-posts" element={<MyPostsPage />} />
-        <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route path="/login" element={<LoginPage />}/>
+        <Route path="/" element={<HomePage />}/>
+        <Route path="/signup" element={<SignupPage />}/>
+        <Route path="/posts" element={<PostlistPage />}/>
+        <Route path="/posts/:id/detail" element={<PostDetailPage />}/>
+        <Route path="/posts/write" element={<ProtectRoute isLoggedIn={true}><Postcreatepage/></ProtectRoute>}/> {/* 나중엔 user정보로 쓰기 */}
+        <Route path="/posts/:id/edit" element={<ProtectRoute isLoggedIn={true}><PostEditPage /></ProtectRoute>}/>
+        <Route path="/posts/mypage" element={<ProtectRoute isLoggedIn={true}><MyPostsPage/></ProtectRoute>}/>
+        <Route path="/admin" element={<AdminRoute isAdmin={true}><AdminDashboardPage/></AdminRoute>}/> {/* 나중엔 user정보로 쓰기 */}
       </Routes>
     </BrowserRouter>
   );
