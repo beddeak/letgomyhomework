@@ -12,6 +12,6 @@ export default function CheckAdmin(props: IsAdmincheck) {
         return <Navigate to="/" replace />;
     } 
 
-    return props.children
+    return <>{props.children}</>;
 }
 
