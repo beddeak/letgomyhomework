@@ -1,18 +1,15 @@
-import { useState } from "react";
-
+import PostForm from "../compo/PostForm";
 
 function PostWritePage() {
-    const [title,setTitle] = useState("");
-    const [content,setcontent] = useState("");
+    const handleWrite = (title: string, content: string) => {
+        console.log(title, content);
+    };
 
     return (
-        <>
-        <input value={title} onChange={(e) => setTitle(e.target.value)}></input>
-        <textarea value={content} onChange={(e) => setcontent(e.target.value)} placeholder="입력"></textarea>
-        <button onClick={() => console.log(title, content)}>저장</button>
-        </>
-    )
+        <div>
+            <PostForm onSubmit={handleWrite} />
+        </div>
+    );
 }
 
-
-export default PostWritePage
+export default PostWritePage;
