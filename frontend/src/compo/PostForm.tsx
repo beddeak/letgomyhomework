@@ -1,4 +1,5 @@
 import {useState} from "react";
+import "./PostFormStyle.css";
 
 type PostFormprops = {
     initialTitle?: string;
