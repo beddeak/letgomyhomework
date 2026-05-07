@@ -1,23 +1,33 @@
-import {useState} from "react";
+import { useState } from "react";
 import "./PostFormStyle.css";
 
-type PostFormprops = {
+type PostFormProps = {
     initialTitle?: string;
     initialContent?: string;
-    onSubmit: (title: string, content: string ) => void;
-}
+    onSubmit: (title: string, content: string) => void;
+};
 
-
-function PostForm({initialTitle= "",initialContent = "", onSubmit}: PostFormprops) {
-    const [title,setTitle] = useState(initialTitle);
-    const [content,setContent] = useState(initialContent);
+function PostForm({
+    initialTitle = "",
+    initialContent = "",
+    onSubmit,
+}: PostFormProps) {
+    const [title, setTitle] = useState(initialTitle);
+    const [content, setContent] = useState(initialContent);
 
     const handleSubmit = () => {
-         if(!title.trim()) return alert("제목을 입력하세요");
-        if(!content.trim()) return alert("내용을 입력하세요");
-        onSubmit(title,content)
-    }
+        if (!title.trim()) {
+            alert("제목을 입력하세요.");
+            return;
+        }
 
+        if (!content.trim()) {
+            alert("내용을 입력하세요.");
+            return;
+        }
+
+        onSubmit(title, content);
+    };
 
     return (
         <div className="write-page">
@@ -27,13 +37,15 @@ function PostForm({initialTitle= "",initialContent = "", onSubmit}: PostFormprop
             </header>
             <div className="set-content">
                 <label>내용</label>
-                <textarea value={content} onChange={(e) => setContent(e.target.value)}></textarea>
+                <textarea value={content} onChange={(e) => setContent(e.target.value)} />
             </div>
             <div className="write-actions">
-                <button onClick={handleSubmit}>보내기</button>
+                <button type="button" onClick={handleSubmit}>
+                    저장하기
+                </button>
             </div>
         </div>
-    )
-} //저장 로직은 부모(WritePage/EditPage)에서 onSubmit으로 넘겨줌
+    );
+}
 
-export default PostForm
+export default PostForm;

@@ -1,17 +1,19 @@
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
+import { useContext } from "react";
 
-interface ProtectRoutes {
-        isLoggedIn: boolean;
-        children: React.ReactNode;
+
+function LoginRoute({children}: {children: React.ReactNode}) {
+   const navigate = useNavigate();
+   const context = useContext(AuthContext);
+   if (!context) return (<p>오류가 발생하였습니다</p>)
+    const {user} = context;
+   if (!user) {
+    navigate(`/login`)
+    return null
+   } else {
+    return <>{children}</>
+   }
 }
 
-
-export default function CheckLogin(props: ProtectRoutes) {
-    if (!props.isLoggedIn) {
-        console.log("로그인 안되있습니다 회원가입 혹은 로그인 부탁드립니다");
-        return <Navigate to="/" replace/>
-    } 
-
-    return <>{props.children}</>;
-}
-
+export default LoginRoute

@@ -1,36 +1,40 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams,useNavigate,Link } from "react-router-dom";
 import PostContext from "../context/PostContext";
 import { useContext } from "react";
 
 function PostDetailPage() {
-    const context = useContext(PostContext)
-    if (!context) return <p>글을 찾을수 없습니다</p>
-    const { posts,deletePost } = context;
     const navigate = useNavigate();
+    const context = useContext(PostContext);
+    if (!context) return <p>글을 찾을수가없습니다</p>
+    const { posts , deletePost } = context;
     const {id} = useParams();
     const postId = Number(id);
     const post = posts.find(post => post.id === postId);
-    const handledelete = () => {
-        deletePost(postId);
-        navigate("/posts");
-    }
-
-    
     if (!post) {
-        return <p>글을 찾을수가 읎어요</p>
+        return <p>글을 찾을수가없습니다</p>
+    } 
+    const handleDelete = () => {
+        deletePost(postId);
+        navigate("/posts")
     }
 
     return (
-        <div>
-            <h1>{post.title}</h1>
-            <p>{post.content}</p>
-            <Link to={`/posts/${post.id}/edit`}>수정하러가기</Link>
-            <button onClick={handledelete}>글 삭제하기</button>
+        <div className="detail-page">
+            <header className="detail-title">
+                <h1>{post.title}</h1>
+            </header>
+            <div className="detail-username">
+                <p>{post.authorName}</p>
+            </div>
+            <div className="detail-body">
+                <p>{post.content}</p>
+            </div>
+            <footer className="detail-actions">
+                <Link to={`/posts/${post.id}/edit`}>글 수정</Link>
+                <button onClick={handleDelete}>글 삭제하기</button>
+            </footer>
         </div>
     )
 }
-
-
 
 export default PostDetailPage
